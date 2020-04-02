@@ -76,7 +76,7 @@ public class CountryDAOClass implements CountryDAO{
 		try
 		{
 			Statement stmt = con.createStatement();
-		    ResultSet rs = stmt.executeQuery("SELECT * FROM Countrys WHERE CountryID=" + id);
+		    ResultSet rs = stmt.executeQuery("SELECT * FROM Country WHERE country_id=" + id);
 		    if(rs.next())
 		    {
 		    	Country s = new Country();
@@ -120,8 +120,39 @@ public class CountryDAOClass implements CountryDAO{
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean updateCountryPopulation(int countryID, long population)
+	{
+		Connection connection = CountryConnectionFactory.getConnection();
+		try
+		{
+			PreparedStatement ps = connection.prepareStatement("UPDATE Country SET population=? WHERE country_id=?");
+			ps.setLong(1, population);
+			ps.setInt(2, countryID);
+		    		      
+		    int i = ps.executeUpdate();
+
+		    if(i == 1)
+		    {
+		    	Country resultC = getCountry(countryID);
+		    	System.out.println("--> Successful Population Update <--");
+		    	System.out.println(" ");
+		    	System.out.println("Updated Country Record:");
+		    	System.out.println("Country_ID:" +resultC.getCountry_id());
+		    	System.out.println("Country Name:" +resultC.getCountry_name());
+		    	System.out.println("New Total Population:" + resultC.getPopulation());		    	
+		    	return true;
+		    }
+		 }
+		catch (SQLException ex)
+		{
+			ex.printStackTrace();
+		}
+		return false;
+	}
+
 	   
 	@Override
 	public void deleteCountry(Country country) {}
 }
-

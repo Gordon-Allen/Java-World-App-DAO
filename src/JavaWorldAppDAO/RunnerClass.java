@@ -1,13 +1,15 @@
 package JavaWorldAppDAO;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
+import java.util.Scanner;
 
 public class RunnerClass {
 
 	public static void main(String[] args) throws SQLException {
 		CountryDAO CountryDAO = new CountryDAOClass();
+		Scanner scanner = new Scanner(System.in);
  		  
 //		//print all Countries
 //		for (Country s : CountryDAO.getAllCountries())
@@ -33,6 +35,22 @@ public class RunnerClass {
 			System.out.println(" ");
 			System.out.println(" ");
 		}
+		
+		System.out.println("Please enter the Country's ID you would like to update:");
+		String countryID = scanner.nextLine();
+		
+		Country resultC = CountryDAO.getCountry(Integer.parseInt(countryID));
+		
+		System.out.println("Country You Selected:");
+		System.out.println(" ");
+		System.out.println("Country_ID:" +resultC.getCountry_id());
+    	System.out.println("Country Name:" +resultC.getCountry_name());
+    	System.out.println("Population:" +resultC.getPopulation());
+    	System.out.println(" ");
+		
+		System.out.println("Please enter the new population total");
+		String population = scanner.nextLine();
+		
+		CountryDAO.updateCountryPopulation(Integer.parseInt( countryID ), Long.parseLong( population ) );
 	}
-
 }

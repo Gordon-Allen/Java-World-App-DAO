@@ -9,6 +9,7 @@ public interface CountryDAO
 	public List<Country> getAllCountries();
 	public ResultSet getAllCountriesCity();
 	public boolean updateCountry(Country country);
+	public boolean updateCountryPopulation(int countryID, long population);
 	public void deleteCountry(Country country);
 
 }
