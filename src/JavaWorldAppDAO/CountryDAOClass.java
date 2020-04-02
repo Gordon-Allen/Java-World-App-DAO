@@ -22,19 +22,25 @@ public class CountryDAOClass implements CountryDAO{
 		Connection con = CountryConnectionFactory.getConnection();
 		try
 		{
+			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Country");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Country;");
+			
 			List<Country> countryList = new ArrayList<Country>();
+			
 			
 			while(rs.next())
 			{
 			Country s = new Country();
 			s.setCountry_id(rs.getInt("country_id"));
-			s.getCity_id(rs.getInt("city_id") );
+			s.setCity_id(rs.getInt("city_id") );
 			s.setCountry_name(rs.getString("country_name") );
 			s.setPopulation(rs.getLong("population") );
 			countryList.add(s);
+			
+
 			}
+						
 			return countryList;
 		}
 		catch (SQLException ex)
@@ -42,7 +48,26 @@ public class CountryDAOClass implements CountryDAO{
 			ex.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	public ResultSet getAllCountriesCity()
+	{
+		Connection con = CountryConnectionFactory.getConnection();
+		try
+		{
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT City.city_id, City.city_name, Country.country_id, Country.country_name, Country.population FROM City INNER JOIN Country USING (city_id);");
+						
+			return rs;
+		}
+		catch (SQLException ex)
+		{
+			ex.printStackTrace();
+		}
+		return null;
 	}	   
+
 
 	@Override
 	public Country getCountry(int id)

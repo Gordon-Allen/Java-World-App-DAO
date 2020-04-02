@@ -26,9 +26,9 @@ public class Country {
 	}
 
 
-	public int getCity_id(int i) {
-		return city_id;
-	}
+//	public int getCity_id(int i) {
+//		return city_id;
+//	}
 
 
 	public void setCity_id(int city_id) {
